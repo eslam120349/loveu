@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Do You Love Me? 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            min-height: 100dvh;
+            background: linear-gradient(135deg, #ffb6c1, #ffc0cb, #ff69b4, #ff1493);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            cursor: default;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            touch-action: manipulation;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating hearts */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .heart-float {
+            position: absolute;
+            font-size: 24px;
+            animation: floatUp linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.2) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Main container */
+        .container {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            z-index: 10;
+            position: relative;
+            max-width: 600px;
+            width: 92%;
+            margin: 20px;
+            animation: bounceIn 0.8s ease;
+            max-height: 90vh;
+            max-height: 90dvh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            transition: all 0.6s ease;
+        }
+
+        .container.celebrating {
+            background: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 30px 80px rgba(255, 105, 180, 0.6);
+            border: 3px solid rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        h1 {
+            font-size: clamp(1.8em, 5vw, 2.8em);
+            margin-bottom: 25px;
+            color: #ff1493;
+            text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.8);
+            animation: pulse 2s ease-in-out infinite;
+            word-wrap: break-word;
+            transition: all 0.5s ease;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .question-emoji {
+            font-size: 1.2em;
+            display: inline-block;
+            animation: wiggle 1s ease-in-out infinite;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-10deg); }
+            75% { transform: rotate(10deg); }
+        }
+
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: clamp(20px, 4vw, 40px);
+            margin: 25px 0;
+            position: relative;
+            min-height: 80px;
+            flex-wrap: wrap;
+            width: 100%;
+            transition: all 0.5s ease;
+        }
+
+        .buttons-container.hidden {
+            opacity: 0;
+            transform: scale(0.5);
+            pointer-events: none;
+            min-height: 0;
+            height: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .btn {
+            padding: clamp(14px, 2.5vw, 18px) clamp(30px, 6vw, 45px);
+            font-size: clamp(1.1em, 3vw, 1.4em);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 20;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            min-width: clamp(100px, 25vw, 120px);
+            white-space: nowrap;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+        }
+
+        .btn:active {
+            transform: scale(0.95) !important;
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+            border: 3px solid white;
+            position: relative;
+            z-index: 25;
+            order: 1;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .btn-yes:hover {
+            box-shadow: 0 12px 35px rgba(255, 20, 147, 0.6);
+            background: linear-gradient(135deg, #ff1493, #ff69b4);
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 12px 35px rgba(255, 20, 147, 0.6); }
+            50% { box-shadow: 0 12px 55px rgba(255, 20, 147, 0.9); }
+        }
+
+        .btn-no {
+            background: linear-gradient(135deg, #ffb6c1, #ff69b4);
+            color: white;
+            border: 3px solid white;
+            transition: all 0.15s ease;
+            position: relative;
+            z-index: 21;
+            order: 2;
+        }
+
+        .btn-no:hover {
+            background: linear-gradient(135deg, #ff69b4, #ffb6c1);
+        }
+
+        /* No button emoji - hidden by default, appears on approach */
+        .btn-no .btn-emoji {
+            display: inline-block;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            margin-left: 5px;
+        }
+
+        .btn-no .btn-emoji.visible {
+            opacity: 1;
+            transform: scale(1);
+            animation: cryBounce 0.5s ease;
+        }
+
+        @keyframes cryBounce {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+
+        .message-box {
+            margin-top: 20px;
+            padding: clamp(15px, 3vw, 20px);
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 20px;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 30;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            width: 100%;
+            transition: all 0.5s ease;
+        }
+
+        .message-box.celebrating {
+            background: rgba(255, 255, 255, 0.7);
+            border: 3px solid rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            animation: celebratePulse 1s ease-in-out infinite;
+        }
+
+        @keyframes celebratePulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 10px 30px rgba(255, 20, 147, 0.4); }
+            50% { transform: scale(1.03); box-shadow: 0 20px 50px rgba(255, 20, 147, 0.7); }
+        }
+
+        .message {
+            font-size: clamp(1em, 2.5vw, 1.3em);
+            color: #ff1493;
+            font-weight: bold;
+            text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
+            animation: fadeInMessage 0.5s ease;
+            line-height: 1.5;
+            word-wrap: break-word;
+            text-align: center;
+            transition: all 0.5s ease;
+        }
+
+        .message.celebrating {
+            font-size: clamp(1.3em, 3.5vw, 1.8em);
+            animation: celebrateText 1s ease-in-out infinite;
+        }
+
+        @keyframes celebrateText {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes fadeInMessage {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .troll-message {
+            background: rgba(255, 255, 255, 0.5);
+            padding: clamp(12px, 2vw, 15px);
+            border-radius: 15px;
+            margin-top: 15px;
+            color: #ff1493;
+            font-weight: bold;
+            font-size: clamp(0.9em, 2vw, 1.1em);
+            position: relative;
+            z-index: 30;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            animation: fadeInMessage 0.5s ease;
+            word-wrap: break-word;
+            transition: all 0.5s ease;
+        }
+
+        .troll-message.celebrating {
+            background: rgba(255, 255, 255, 0.7);
+            border: 3px solid rgba(255, 255, 255, 0.9);
+            font-size: clamp(1.1em, 2.5vw, 1.3em);
+            animation: celebrateText 1.5s ease-in-out infinite;
+        }
+
+        .sparkle {
+            position: absolute;
+            pointer-events: none;
+            animation: sparkleAnimation 0.6s ease-out;
+            font-size: 20px;
+        }
+
+        @keyframes sparkleAnimation {
+            0% { transform: scale(1) translateY(0); opacity: 1; }
+            100% { transform: scale(2) translateY(-30px); opacity: 0; }
+        }
+
+        /* Celebration */
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .celebration-heart {
+            position: absolute;
+            font-size: 40px;
+            animation: celebrateFloat 2s ease-out forwards;
+        }
+
+        @keyframes celebrateFloat {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-400px) scale(2); opacity: 0; }
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            animation: confettiFall 3s ease-out forwards;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Button scared animation */
+        .btn-scared {
+            animation: scaredShake 0.3s ease;
+        }
+
+        @keyframes scaredShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px) rotate(-5deg); }
+            75% { transform: translateX(5px) rotate(5deg); }
+        }
+
+        /* Mobile-specific styles */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+                border-radius: 25px;
+                margin: 15px;
+                width: 95%;
+            }
+
+            .buttons-container {
+                gap: 15px;
+                min-height: 70px;
+            }
+
+            .btn {
+                padding: 14px 30px;
+                font-size: 1.1em;
+                min-width: 100px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+                margin-bottom: 20px;
+            }
+
+            .message-box {
+                padding: 15px;
+                min-height: 50px;
+            }
+
+            .heart-float {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px 15px;
+                border-radius: 20px;
+                margin: 10px;
+                width: 96%;
+            }
+
+            .buttons-container {
+                gap: 12px;
+                min-height: 60px;
+                flex-direction: row;
+                flex-wrap: nowrap;
+            }
+
+            .btn {
+                padding: 12px 20px;
+                font-size: 1em;
+                min-width: 80px;
+                border-radius: 40px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+                margin-bottom: 15px;
+            }
+
+            .message {
+                font-size: 0.95em;
+            }
+
+            .troll-message {
+                font-size: 0.85em;
+                padding: 10px;
+            }
+
+            .heart-float {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .container {
+                padding: 20px 12px;
+                margin: 8px;
+            }
+
+            .buttons-container {
+                gap: 10px;
+                min-height: 55px;
+            }
+
+            .btn {
+                padding: 10px 18px;
+                font-size: 0.9em;
+                min-width: 70px;
+            }
+
+            h1 {
+                font-size: 1.3em;
+            }
+        }
+
+        /* Landscape mode */
+        @media (max-height: 600px) and (orientation: landscape) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+                max-height: 95vh;
+                max-height: 95dvh;
+                overflow-y: auto;
+            }
+
+            h1 {
+                font-size: 1.5em;
+                margin-bottom: 10px;
+            }
+
+            .buttons-container {
+                margin: 15px 0;
+                min-height: 50px;
+            }
+
+            .btn {
+                padding: 10px 25px;
+                font-size: 1em;
+            }
+
+            .message-box {
+                padding: 10px;
+                min-height: 40px;
+                margin-top: 10px;
+            }
+
+            .troll-message {
+                margin-top: 8px;
+                padding: 8px;
+            }
+        }
+
+        /* Touch device optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .btn-no {
+                transition: all 0.1s ease;
+            }
+
+            .btn-yes:hover {
+                transform: none;
+            }
+
+            .btn-yes:active {
+                transform: scale(0.95);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Hearts Background -->
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <!-- Main Container -->
+    <div class="container" id="mainContainer">
+        <h1 id="mainTitle">
+            <span class="question-emoji">💖</span> 
+            Do You Love Me? 
+            <span class="question-emoji">💖</span>
+        </h1>
+        
+        <div class="buttons-container" id="buttonsContainer">
+            <button class="btn btn-yes" id="yesBtn" onclick="sayYes()">
+                Yes 💕
+            </button>
+            <button class="btn btn-no" id="noBtn">
+                No <span class="btn-emoji">😢</span>
+            </button>
+        </div>
+        
+        <div class="message-box" id="messageBox">
+            <div class="message" id="message">Choose wisely... 😏💕</div>
+        </div>
+        
+        <div class="troll-message" id="trollMessage" style="display: none;"></div>
+    </div>
+
+    <!-- Celebration Container -->
+    <div class="celebration" id="celebration"></div>
+
+    <script>
+        // Generate floating hearts in background
+        function createFloatingHearts() {
+            const container = document.getElementById('heartsContainer');
+            const hearts = ['💕', '💖', '💗', '💝', '💘', '❤️', '🩷', '💓', '💞', '🫀'];
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart-float';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                const isMobile = window.innerWidth <= 768;
+                heart.style.fontSize = (Math.random() * (isMobile ? 20 : 30) + (isMobile ? 12 : 15)) + 'px';
+                heart.style.animationDuration = (Math.random() * 8 + 6) + 's';
+                container.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 14000);
+            }, 500);
+        }
+
+        createFloatingHearts();
+
+        // DOM Elements
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtnEmoji = noBtn.querySelector('.btn-emoji');
+        const messageDiv = document.getElementById('message');
+        const messageBox = document.getElementById('messageBox');
+        const trollMessageDiv = document.getElementById('trollMessage');
+        const buttonsContainer = document.getElementById('buttonsContainer');
+        const mainContainer = document.getElementById('mainContainer');
+        const mainTitle = document.getElementById('mainTitle');
+        
+        let noBtnEscapes = 0;
+        let mouseNearNoBtn = false;
+        let isMoving = false;
+        let yesScale = 1;
+        let hasChosenYes = false;
+        
+        // Detect if device is touch-enabled
+        const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+        
+        // Troll messages based on escape count
+        const trollMessagesByPhase = {
+            1: [
+                "🤔 Hmm... trying to say no? That's interesting...",
+                "😏 Oh, you want the 'No' button? How cute!",
+                "🫣 Did you just try to click 'No'? Really?"
+            ],
+            2: [
+                "😤 Still trying? You're persistent, I'll give you that!",
+                "🙈 Oops! Slipped away again! You'll have to be faster!",
+                "💭 Let me think... Nope, still running! 🏃‍♂️"
+            ],
+            3: [
+                "😅 Come on now, is 'No' really what you want?",
+                "🥺 The 'Yes' button is right there... looking all pretty...",
+                "😰 Please... just consider the 'Yes' button..."
+            ],
+            4: [
+                "😭 Why are you doing this to me? What did I ever do?",
+                "💔 You're breaking my little button heart!",
+                "😤 Fine! Keep trying! I can run all day!"
+            ],
+            5: [
+                "🤪 Almost had me! Your skills are improving!",
+                "😇 What if I told you... 'Yes' is the better option?",
+                "🦸‍♂️ I'm like a superhero... but for avoiding 'No' clicks!"
+            ],
+            6: [
+                "🎭 Plot twist: There is no 'No' option!",
+                "🤯 Mind = blown! You're still trying to click me?",
+                "😴 Getting sleepy from all this running..."
+            ],
+            7: [
+                "😩 Okay, you're REALLY determined! Respect... but still no!",
+                "🫠 I'm getting dizzy from all this running!",
+                "😵‍💫 How are you still trying? I'm exhausted!"
+            ],
+            8: [
+                "🥵 Alright, I'm impressed! But seriously, just pick 'Yes'!",
+                "😰 I can't keep this up forever!",
+                "🙀 You're unstoppable! But so am I!"
+            ],
+            9: [
+                "😭 Fine! I can't take it anymore! You win!",
+                "🫣 The 'Yes' button is literally perfect for you!",
+                "😤 OK OK! I'm transforming! Happy now?!"
+            ]
+        };
+
+        // Update message box content
+        function updateMessage(text) {
+            if (hasChosenYes) return;
+            messageDiv.textContent = text;
+            messageBox.classList.add('sad-animation');
+            setTimeout(() => {
+                messageBox.classList.remove('sad-animation');
+            }, 500);
+        }
+
+        // Show crying emoji on No button
+        function showCryingEmoji() {
+            if (hasChosenYes) return;
+            noBtnEmoji.classList.add('visible');
+            
+            clearTimeout(noBtn._emojiTimeout);
+            noBtn._emojiTimeout = setTimeout(() => {
+                noBtnEmoji.classList.remove('visible');
+            }, 2000);
+        }
+
+        // Hide crying emoji
+        function hideCryingEmoji() {
+            noBtnEmoji.classList.remove('visible');
+        }
+
+        // Update troll message
+        function updateTrollMessage(phase) {
+            if (hasChosenYes) return;
+            trollMessageDiv.style.display = 'block';
+            
+            const phaseMessages = {
+                1: "🤔 Interesting choice... but are you sure about that?",
+                2: "😏 I see you're determined. But the 'Yes' button is right there!",
+                3: "😤 Three times? The 'Yes' button is getting impatient!",
+                4: "😅 Okay, you're stubborn! But I'm MORE stubborn!",
+                5: "🥺 Please... I'm getting tired. Just look at that 'Yes' button!",
+                6: "😭 Can you please just consider 'Yes'? For me? 🥺",
+                7: "🫠 I'm literally running out of space to run!",
+                8: "😰 I'm begging you... just pick 'Yes'!",
+                9: "😤 FINE! I surrender! The 'No' button officially gives up!"
+            };
+            
+            trollMessageDiv.textContent = phaseMessages[phase] || "😤 That's it! I'm transforming!";
+            
+            // Transform the No button after phase 9
+            if (phase >= 9) {
+                setTimeout(() => {
+                    if (hasChosenYes) return;
+                    hideCryingEmoji();
+                    noBtn.innerHTML = 'Fine... Yes 😒💕';
+                    noBtn.style.background = "linear-gradient(135deg, #ff69b4, #ff1493)";
+                    noBtn.style.animation = "glowPulse 1s ease-in-out infinite";
+                    noBtn.onclick = function(e) {
+                        e.preventDefault();
+                        sayYes();
+                    };
+                    if (isTouchDevice) {
+                        noBtn.ontouchstart = function(e) {
+                            e.preventDefault();
+                            sayYes();
+                        };
+                    }
+                    noBtn.onmouseover = null;
+                    trollMessageDiv.textContent = "😅 See? Even 'No' surrendered! Now click ANY button! 💖";
+                }, 1500);
+            }
+        }
+
+        // Increase Yes button size (gentle increase)
+        function increaseYesSize() {
+            if (hasChosenYes) return;
+            yesScale += 0.05;
+            const newScale = Math.min(yesScale, 1.4);
+            
+            yesBtn.style.transform = `scale(${newScale})`;
+            yesBtn.style.zIndex = '25';
+            
+            if (newScale >= 1.2) {
+                yesBtn.style.animation = 'glowPulse 1.5s ease-in-out infinite';
+                yesBtn.style.boxShadow = '0 10px 30px rgba(255, 20, 147, 0.5)';
+            }
+            
+            if (newScale >= 1.35) {
+                yesBtn.style.animation = 'glowPulse 1s ease-in-out infinite';
+                yesBtn.style.boxShadow = '0 12px 40px rgba(255, 20, 147, 0.7)';
+            }
+        }
+
+        // Move button away from cursor/touch AND message box
+        function moveButtonAway(clientX, clientY) {
+            if (noBtn.textContent.includes('Fine') || isMoving || hasChosenYes) return;
+            
+            isMoving = true;
+            
+            const noBtnRect = noBtn.getBoundingClientRect();
+            const messageBoxRect = messageBox.getBoundingClientRect();
+            
+            showCryingEmoji();
+            
+            let newLeft, newTop;
+            let attempts = 0;
+            const maxAttempts = 50;
+            const containerWidth = buttonsContainer.clientWidth;
+            const containerHeight = buttonsContainer.clientHeight;
+            const btnWidth = noBtnRect.width;
+            const btnHeight = noBtnRect.height;
+            
+            do {
+                const cursorRelativeX = clientX - buttonsContainer.getBoundingClientRect().left;
+                const cursorRelativeY = clientY - buttonsContainer.getBoundingClientRect().top;
+                
+                if (cursorRelativeX < containerWidth / 2) {
+                    newLeft = containerWidth - btnWidth - 20 - Math.random() * 40;
+                } else {
+                    newLeft = 20 + Math.random() * 40;
+                }
+                
+                if (cursorRelativeY < containerHeight / 2) {
+                    newTop = containerHeight - btnHeight - 10 - Math.random() * 20;
+                } else {
+                    newTop = 10 + Math.random() * 20;
+                }
+                
+                newLeft = Math.max(5, Math.min(newLeft, containerWidth - btnWidth - 5));
+                newTop = Math.max(5, Math.min(newTop, containerHeight - btnHeight - 5));
+                
+                attempts++;
+            } while (
+                attempts < maxAttempts && 
+                isOverlappingMessageBox(
+                    buttonsContainer.getBoundingClientRect().left + newLeft,
+                    buttonsContainer.getBoundingClientRect().top + newTop,
+                    btnWidth,
+                    btnHeight,
+                    messageBoxRect
+                )
+            );
+            
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = newLeft + 'px';
+            noBtn.style.top = newTop + 'px';
+            noBtn.style.transition = 'all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+            
+            noBtnEscapes++;
+            
+            noBtn.classList.add('btn-scared');
+            setTimeout(() => {
+                noBtn.classList.remove('btn-scared');
+            }, 300);
+            
+            increaseYesSize();
+            
+            const phaseMessages = trollMessagesByPhase[noBtnEscapes] || trollMessagesByPhase[9];
+            const randomMsg = phaseMessages[Math.floor(Math.random() * phaseMessages.length)];
+            updateMessage(randomMsg);
+            
+            if (noBtnEscapes % 2 === 1 || noBtnEscapes >= 9) {
+                updateTrollMessage(noBtnEscapes);
+            }
+            
+            createSparkle(clientX, clientY);
+            
+            setTimeout(() => {
+                isMoving = false;
+            }, 350);
+        }
+
+        function isOverlappingMessageBox(x, y, width, height, msgBoxRect) {
+            const padding = 30;
+            const msgLeft = msgBoxRect.left - padding;
+            const msgRight = msgBoxRect.right + padding;
+            const msgTop = msgBoxRect.top - padding;
+            const msgBottom = msgBoxRect.bottom + padding;
+            
+            return !(x + width < msgLeft || x > msgRight || y + height < msgTop || y > msgBottom);
+        }
+
+        // Mouse movement handler (desktop)
+        if (!isTouchDevice) {
+            document.addEventListener('mousemove', function(e) {
+                if (noBtn.textContent.includes('Fine') || isMoving || hasChosenYes) return;
+                
+                const noBtnRect = noBtn.getBoundingClientRect();
+                const mouseX = e.clientX;
+                const mouseY = e.clientY;
+                
+                const distToNo = Math.hypot(
+                    mouseX - (noBtnRect.left + noBtnRect.width / 2),
+                    mouseY - (noBtnRect.top + noBtnRect.height / 2)
+                );
+                
+                if (distToNo < 150) {
+                    showCryingEmoji();
+                } else if (distToNo > 200) {
+                    hideCryingEmoji();
+                }
+                
+                if (distToNo < 120 && !mouseNearNoBtn) {
+                    mouseNearNoBtn = true;
+                    moveButtonAway(mouseX, mouseY);
+                    setTimeout(() => { mouseNearNoBtn = false; }, 300);
+                }
+            });
+        }
+
+        // Touch handler (mobile)
+        if (isTouchDevice) {
+            document.addEventListener('touchmove', function(e) {
+                if (noBtn.textContent.includes('Fine') || isMoving || hasChosenYes) return;
+                
+                const touch = e.touches[0];
+                const noBtnRect = noBtn.getBoundingClientRect();
+                const touchX = touch.clientX;
+                const touchY = touch.clientY;
+                
+                const distToNo = Math.hypot(
+                    touchX - (noBtnRect.left + noBtnRect.width / 2),
+                    touchY - (noBtnRect.top + noBtnRect.height / 2)
+                );
+                
+                if (distToNo < 180) {
+                    showCryingEmoji();
+                } else if (distToNo > 250) {
+                    hideCryingEmoji();
+                }
+                
+                if (distToNo < 150 && !mouseNearNoBtn) {
+                    mouseNearNoBtn = true;
+                    moveButtonAway(touchX, touchY);
+                    setTimeout(() => { mouseNearNoBtn = false; }, 300);
+                }
+            }, { passive: true });
+
+            noBtn.addEventListener('touchstart', function(e) {
+                if (!noBtn.textContent.includes('Fine') && !hasChosenYes) {
+                    e.preventDefault();
+                    const touch = e.touches[0];
+                    if (!isMoving) {
+                        moveButtonAway(touch.clientX, touch.clientY);
+                    }
+                }
+            });
+        }
+
+        // No button click handler (fallback)
+        noBtn.addEventListener('click', function(e) {
+            if (!noBtn.textContent.includes('Fine') && !isMoving && !hasChosenYes) {
+                e.preventDefault();
+                moveButtonAway(e.clientX || window.innerWidth / 2, e.clientY || window.innerHeight / 2);
+            }
+        });
+
+        // Yes button behavior - Hide buttons and show celebration
+        function sayYes() {
+            if (hasChosenYes) return;
+            hasChosenYes = true;
+            
+            // Hide the buttons with animation
+            buttonsContainer.classList.add('hidden');
+            
+            // Change title
+            mainTitle.innerHTML = '💖 YAAAY! 💖';
+            mainTitle.style.fontSize = 'clamp(2em, 6vw, 3.2em)';
+            mainTitle.style.animation = 'celebrateText 0.8s ease-in-out infinite';
+            
+            // Update message box
+            messageBox.classList.add('celebrating');
+            messageDiv.classList.add('celebrating');
+            messageDiv.textContent = "AWWWW! I knew it! You love me so much! I love you too! 🥰💕✨";
+            
+            // Show and style troll message
+            trollMessageDiv.style.display = 'block';
+            trollMessageDiv.classList.add('celebrating');
+            trollMessageDiv.textContent = "💖 YAAAY! Best decision ever! You're the sweetest person in the world! Love you to the moon and back! 🌙💕😘";
+            trollMessageDiv.style.background = 'rgba(255, 105, 180, 0.3)';
+            trollMessageDiv.style.color = '#ff1493';
+            
+            // Style container
+            mainContainer.classList.add('celebrating');
+            
+            // Hide crying emoji
+            hideCryingEmoji();
+            
+            // Big celebration
+            celebrateBig();
+            
+            // Continuous mini celebrations
+            const celebrationInterval = setInterval(() => {
+                if (!hasChosenYes) {
+                    clearInterval(celebrationInterval);
+                    return;
+                }
+                miniCelebrate();
+            }, 3000);
+            
+            // Store interval for cleanup
+            window._celebrationInterval = celebrationInterval;
+            
+            // Reset after 10 seconds
+            setTimeout(() => {
+                resetEverything();
+                clearInterval(celebrationInterval);
+            }, 10000);
+        }
+
+        function resetEverything() {
+            hasChosenYes = false;
+            noBtnEscapes = 0;
+            yesScale = 1;
+            
+            // Show buttons again
+            buttonsContainer.classList.remove('hidden');
+            
+            // Reset title
+            mainTitle.innerHTML = '<span class="question-emoji">💖</span> Do You Love Me? <span class="question-emoji">💖</span>';
+            mainTitle.style.fontSize = '';
+            mainTitle.style.animation = 'pulse 2s ease-in-out infinite';
+            
+            // Reset message box
+            messageBox.classList.remove('celebrating');
+            messageDiv.classList.remove('celebrating');
+            messageDiv.textContent = "Choose wisely... 😏💕";
+            messageDiv.style.fontSize = '';
+            
+            // Reset troll message
+            trollMessageDiv.classList.remove('celebrating');
+            trollMessageDiv.style.display = 'none';
+            trollMessageDiv.style.background = '';
+            trollMessageDiv.style.color = '';
+            trollMessageDiv.style.fontSize = '';
+            
+            // Reset container
+            mainContainer.classList.remove('celebrating');
+            
+            // Reset no button
+            noBtn.style.position = 'relative';
+            noBtn.style.left = 'auto';
+            noBtn.style.top = 'auto';
+            noBtn.innerHTML = 'No <span class="btn-emoji">😢</span>';
+            noBtn.style.background = "linear-gradient(135deg, #ffb6c1, #ff69b4)";
+            noBtn.style.animation = '';
+            
+            // Reset yes button
+            yesBtn.style.transform = '';
+            yesBtn.style.animation = '';
+            yesBtn.style.boxShadow = '';
+            
+            // Re-attach event handlers
+            noBtn.onclick = function(e) {
+                if (!noBtn.textContent.includes('Fine') && !isMoving && !hasChosenYes) {
+                    e.preventDefault();
+                    moveButtonAway(e.clientX || window.innerWidth / 2, e.clientY || window.innerHeight / 2);
+                }
+            };
+            
+            if (isTouchDevice) {
+                noBtn.ontouchstart = function(e) {
+                    if (!noBtn.textContent.includes('Fine') && !hasChosenYes) {
+                        e.preventDefault();
+                        const touch = e.touches[0];
+                        if (!isMoving) {
+                            moveButtonAway(touch.clientX, touch.clientY);
+                        }
+                    }
+                };
+            }
+            
+            noBtn.onmouseover = null;
+            hideCryingEmoji();
+            
+            // Clear celebration interval
+            if (window._celebrationInterval) {
+                clearInterval(window._celebrationInterval);
+            }
+        }
+
+        function celebrateBig() {
+            const celebrationDiv = document.getElementById('celebration');
+            const hearts = ['💕', '💖', '💗', '💝', '💘', '❤️', '🩷', '💓', '💞', '🎉', '✨', '🥰', '😍', '💑', '💏'];
+            const colors = ['#ff1493', '#ff69b4', '#ffb6c1', '#ffc0cb', '#ff6b9d', '#ff3366', '#ff99cc'];
+            const isMobile = window.innerWidth <= 768;
+            const heartCount = isMobile ? 30 : 50;
+            const confettiCount = isMobile ? 60 : 100;
+            
+            for (let i = 0; i < heartCount; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'celebration-heart';
+                    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.top = Math.random() * 40 + 30 + '%';
+                    heart.style.fontSize = (Math.random() * (isMobile ? 30 : 50) + (isMobile ? 15 : 20)) + 'px';
+                    heart.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+                    celebrationDiv.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 3500);
+                }, i * (isMobile ? 60 : 50));
+            }
+            
+            for (let i = 0; i < confettiCount; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = -10 + 'px';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                    confetti.style.width = (Math.random() * 10 + 5) + 'px';
+                    confetti.style.height = (Math.random() * 10 + 5) + 'px';
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    celebrationDiv.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 4000);
+                }, i * (isMobile ? 40 : 30));
+            }
+        }
+
+        function miniCelebrate() {
+            const celebrationDiv = document.getElementById('celebration');
+            const hearts = ['💕', '💖', '💗', '✨', '🥰', '💝'];
+            
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'celebration-heart';
+                    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.top = Math.random() * 60 + 40 + '%';
+                    heart.style.fontSize = (Math.random() * 25 + 15) + 'px';
+                    heart.style.animationDuration = (Math.random() * 1.5 + 1) + 's';
+                    celebrationDiv.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 2500);
+                }, i * 40);
+            }
+        }
+
+        function createSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.textContent = '✨';
+            sparkle.style.left = x + 'px';
+            sparkle.style.top = y + 'px';
+            sparkle.style.position = 'fixed';
+            sparkle.style.zIndex = '1000';
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.remove();
+            }, 600);
+        }
+
+        // Add sparkle on click anywhere
+        document.addEventListener('click', function(e) {
+            if (e.target.id !== 'noBtn' && e.target.id !== 'yesBtn') {
+                createSparkle(e.clientX, e.clientY);
+            }
+        });
+
+        // Handle window resize
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                if (!noBtn.textContent.includes('Fine') && !hasChosenYes) {
+                    noBtn.style.position = 'relative';
+                    noBtn.style.left = 'auto';
+                    noBtn.style.top = 'auto';
+                }
+            }, 250);
+        });
+
+        // Initial setup
+        buttonsContainer.style.position = 'relative';
+        hideCryingEmoji();
+    </script>
+</body>
+</html>
